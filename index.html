@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Meu financeiro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f5f5;--sf:#fff;--ink:#12212b;--mu:#5d6f7a;--ln:#d8e2e4;--in:#13795b;--ex:#c2410c;--ac:#0e5c73;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a20;--sf:#162830;--ink:#e6eef0;--mu:#8fa3ac;--ln:#26393f;--in:#3ccf9f;--ex:#ff8a5c;--ac:#5cc0dc}}
+:root[data-theme="dark"]{--bg:#0e1a20;--sf:#162830;--ink:#e6eef0;--mu:#8fa3ac;--ln:#26393f;--in:#3ccf9f;--ex:#ff8a5c;--ac:#5cc0dc}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.45 "Schibsted Grotesk",system-ui,sans-serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
+h1{font-size:24px;font-weight:800;margin:0}h2{font-size:17px;margin:0 0 10px;font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+input,button{font:inherit;color:inherit}
+input{background:var(--bg);border:1px solid var(--ln);border-radius:6px;padding:7px 9px;min-width:0}
+input:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+button{background:var(--sf);border:1px solid var(--ln);border-radius:6px;padding:7px 12px;cursor:pointer}
+button.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.k{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:14px 16px}
+.k small{color:var(--mu);display:block}.k b{font-size:24px;font-weight:800;display:block;margin:2px 0}
+.k.big{border-color:var(--ac);border-width:2px}.k.big b{font-size:30px}
+.in{color:var(--in)}.ex{color:var(--ex)}.mu{color:var(--mu)}
+section{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:16px;margin-bottom:16px}
+.sc{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:640px}
+th{text-align:left;font-weight:600;color:var(--mu);font-size:13px;padding:6px 6px;border-bottom:1px solid var(--ln)}
+td{padding:5px 6px;border-bottom:1px solid var(--ln)}td input{width:100%}
+td.n{text-align:right;font-variant-numeric:tabular-nums}th.n{text-align:right}
+.bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:2px}.bar i{display:block;height:100%;background:var(--ex)}
+.del{border:0;background:none;color:var(--mu);padding:4px 8px}
+.add input{flex:1 1 120px}.hint{color:var(--mu);font-size:13px;margin:8px 0 0}
+#login{position:fixed;inset:0;z-index:50;background:#0b3b4a;display:flex;align-items:center;justify-content:center;padding:20px}#login[hidden]{display:none}
+#login .box{background:var(--sf);border-radius:14px;padding:26px;width:100%;max-width:360px;text-align:center}
+#login h1{font-size:22px;margin:12px 0 4px}#login p{margin:0 0 16px;color:var(--mu)}
+#login input{width:100%;margin-bottom:10px;padding:10px 12px}#login button{width:100%;padding:11px}#login .err{color:var(--ex);min-height:20px;margin:8px 0 0;font-size:14px}
+.top{background:#0b3b4a;color:#fff;border-bottom:3px solid #2bb58a}.top .w{max-width:980px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.top h1{color:#fff;font-size:20px;line-height:1.15;letter-spacing:-.01em}.top span{color:#b9d3db;font-size:13px}
+.k{border-top:3px solid var(--ln)}.hero .k:nth-child(1){border-top-color:var(--in)}.hero .k:nth-child(2){border-top-color:var(--ex)}.hero .k:nth-child(3){border-top-color:var(--ac)}.k b{font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+th{background:var(--bg)}tbody tr:hover td{background:var(--bg)}
+</style></head><body><div id="login"><div class="box"><svg width="64" height="64" viewBox="0 0 512 512" role="img" aria-label="Monograma da família: J M G B"><rect width="512" height="512" rx="116" fill="#0b3b4a"/><rect x="64" y="64" width="176" height="176" rx="44" fill="#2bb58a"/><rect x="272" y="64" width="176" height="176" rx="44" fill="#ff8a5c"/><rect x="64" y="272" width="176" height="176" rx="44" fill="#ffd166"/><rect x="272" y="272" width="176" height="176" rx="44" fill="#5cc0dc"/><g fill="none" stroke="#0b3b4a" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><path d="M184 106V164A28 28 0 0 1 156 192A28 28 0 0 1 128 168"/><path d="M324 198V108L360 160L396 108V198"/><path d="M185 337A40 40 0 1 0 192 360H160"/><path d="M330 312H358A24 24 0 0 1 358 360H330M330 360H366A24 24 0 0 1 366 408H330M330 312V408"/></g></svg><h1>Meu financeiro</h1><p>Entre para ver as finanças da família</p><form id="lf"><input type="email" id="le" placeholder="E-mail" autocomplete="username" required><input type="password" id="lp" placeholder="Senha" autocomplete="current-password" required><button class="p" type="submit">Entrar</button><div class="err" id="lm" role="alert"></div></form></div></div><div class="top"><div class="w"><svg width="46" height="46" viewBox="0 0 512 512" role="img" aria-label="Monograma da família: J M G B"><rect width="512" height="512" rx="116" fill="#0b3b4a"/><rect x="64" y="64" width="176" height="176" rx="44" fill="#2bb58a"/><rect x="272" y="64" width="176" height="176" rx="44" fill="#ff8a5c"/><rect x="64" y="272" width="176" height="176" rx="44" fill="#ffd166"/><rect x="272" y="272" width="176" height="176" rx="44" fill="#5cc0dc"/><g fill="none" stroke="#0b3b4a" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><path d="M184 106V164A28 28 0 0 1 156 192A28 28 0 0 1 128 168"/><path d="M324 198V108L360 160L396 108V198"/><path d="M185 337A40 40 0 1 0 192 360H160"/><path d="M330 312H358A24 24 0 0 1 358 360H330M330 360H366A24 24 0 0 1 366 408H330M330 312V408"/></g></svg><div><h1>Meu financeiro</h1><span>Renda, custos e economia mês a mês</span></div></div></div><main>
+<header><div><h2 style="margin:0;font-size:20px">Resumo do mês</h2><span id="st" class="mu" style="font-size:13px">Sincronizando…</span></div>
+<div class="row"><input type="month" id="mes" aria-label="Mês">
+<button id="cp">Copiar do mês anterior</button><button id="ex">Backup</button><button id="im">Restaurar</button><button id="pc">Colar da planilha</button><button id="lo">Sair</button><button id="ic">Importar CSV</button><input type="file" id="fc" accept=".csv,.txt" hidden>
+<input type="file" id="fi" accept=".json" hidden></div></header>
+<section id="pst" hidden><h2>Colar da planilha</h2><p class="hint" style="margin:0 0 8px">Copie as linhas da planilha (nome e valor) e cole aqui. Elas entram no mês selecionado. A linha Entradas vira renda; Soma, Saldo e Disponível são ignoradas. Depois marque Pago nos custos que já quitou.</p><textarea id="pt" rows="8" style="width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--ln);border-radius:6px;padding:8px;font:inherit"></textarea><div class="row" style="margin-top:8px"><button class="p" id="pg">Importar para o mês</button><button id="pf">Cancelar</button></div></section>
+<div id="app"></div>
+<datalist id="cats"></datalist>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const K='financeiro-v1';let S={months:{}},cur=new Date().toISOString().slice(0,7);
+
+let DB=null,first=true;const synced={};
+const st=t=>{const e=document.getElementById('st');if(e)e.textContent=t};
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}
+ if(!DB)return;wq=wq.then(async()=>{for(const m in S.months){const d=S.months[m],j=JSON.stringify(d);if(synced[m]===j)continue;if(!d.income.length&&!d.exp.length&&synced[m]===undefined)continue;synced[m]=j;try{await DB.doc('months/'+m).set(d)}catch(e){st('Não foi possível salvar na conta compartilhada: '+(e.message||e.code))}}})};
+let wq=Promise.resolve();
+const M=m=>S.months[m]||(S.months[m]={income:[],exp:[]});
+const R=v=>(+v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const P=v=>(isFinite(v)?v*100:0).toLocaleString('pt-BR',{maximumFractionDigits:1})+'%';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const has=v=>v!==''&&v!=null;
+const prev=m=>{const[y,o]=m.split('-').map(Number);const d=new Date(y,o-2,1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
+const eff=x=>has(x.real)?+x.real:(+x.plan||0);
+function sums(m){const d=S.months[m];if(!d)return null;
+ const inc=d.income.reduce((a,x)=>a+(+x.v||0),0),spent=d.exp.reduce((a,x)=>a+(+x.real||0),0),plan=d.exp.reduce((a,x)=>a+(+x.plan||0),0);
+ return{inc,spent,plan,eco:inc-spent}}
+function delta(v){if(!v)return '<span class="mu">sem variação</span>';return `<span class="${v>0?'in':'ex'}">${v>0?'+':'−'}${R(Math.abs(v))}</span>`}
+let sel='';
+const mm=m=>m.split('-').reverse().join('/');
+const key=n=>String(n||'').trim().toLowerCase();
+const amt=(m,k)=>{const d=S.months[m];if(!d)return null;let t=0,f=false;d.exp.forEach(x=>{if(key(x.n)===k&&has(x.real)){t+=+x.real;f=true}});return f?t:null};
+const names=()=>{const o={};Object.values(S.months).forEach(m=>m.exp.forEach(x=>{if(key(x.n))o[key(x.n)]=String(x.n).trim()}));return o};
+const dc=v=>v==null?'<span class="mu">–</span>':v===0?'<span class="mu">igual</span>':`<span class="${v>0?'ex':'in'}">${v>0?'+':'−'}${R(Math.abs(v))}</span>`;
+function varSec(){const pm=prev(cur),nm=names(),ks=Object.keys(nm).sort();
+ const rows=ks.map(k=>({k,a:amt(pm,k),b:amt(cur,k)})).filter(r=>r.a!=null||r.b!=null).map(r=>({...r,dv:r.a!=null&&r.b!=null?r.b-r.a:null})).sort((x,y)=>Math.abs(y.dv??0)-Math.abs(x.dv??0));
+ if(!sel||!nm[sel])sel=(rows[0]||{k:ks[0]||''}).k;
+ const ev=Object.keys(S.months).sort().map(m=>({m,v:amt(m,sel)})).filter(x=>x.v!=null);const mx=Math.max(...ev.map(x=>x.v),1);
+ return `<section><h2>Variação por custo</h2><p class="hint" style="margin:0 0 8px">${mm(cur)} comparado com ${mm(pm)}. Só entram custos com gasto real lançado.</p><div class="sc"><table><thead><tr><th>Custo</th><th class="n">${mm(pm)}</th><th class="n">${mm(cur)}</th><th class="n">Diferença</th><th class="n">%</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(nm[r.k])}</td><td class="n">${r.a==null?'–':R(r.a)}</td><td class="n">${r.b==null?'–':R(r.b)}</td><td class="n">${dc(r.dv)}</td><td class="n">${r.dv!=null&&r.a?P(r.dv/r.a):'–'}</td></tr>`).join('')||'<tr><td colspan="5" class="mu">Lance o gasto real em dois meses seguidos para ver a variação.</td></tr>'}</tbody></table></div>
+ <div class="row" style="margin:16px 0 8px"><label for="sel">Evolução de</label><select id="sel" style="background:var(--bg);color:var(--ink);border:1px solid var(--ln);border-radius:6px;padding:7px 9px;font:inherit">${ks.map(k=>`<option value="${esc(k)}"${k===sel?' selected':''}>${esc(nm[k])}</option>`).join('')}</select></div>
+ <div class="sc"><table style="min-width:0"><tbody>${ev.map((x,i)=>`<tr><td style="width:80px">${mm(x.m)}</td><td><div class="bar" style="height:10px"><i style="width:${x.v/mx*100}%"></i></div></td><td class="n" style="width:120px">${R(x.v)}</td><td class="n" style="width:130px">${i?dc(x.v-ev[i-1].v):'–'}</td></tr>`).join('')||'<tr><td class="mu">Sem dados para este custo.</td></tr>'}</tbody></table></div></section>`}
+const num=s=>{s=String(s||'').replace(/[R$\s]/g,'');if(!s)return '';if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');const n=parseFloat(s);return isNaN(n)?'':n};
+const mon=s=>{s=s.trim();let m=s.match(/^(\d{4})-(\d{1,2})/);if(m)return m[1]+'-'+m[2].padStart(2,'0');m=s.match(/^(\d{1,2})\/(\d{4})$/);return m?m[2]+'-'+m[1].padStart(2,'0'):null};
+function imp(txt){const L=txt.split(/\r?\n/).filter(x=>x.trim());if(!L.length)return;const dl=[';','\t',','].find(c=>L[0].includes(c))||';';let n=0;
+ L.forEach(l=>{const c=l.split(dl).map(x=>x.trim().replace(/^"|"$/g,''));const m=mon(c[0]);if(!m)return;const d=M(m);
+  if((c[1]||'').toLowerCase().startsWith('r')){d.income.push({n:c[2]||'Renda',v:num(c[5]!==undefined&&c[5]!==''?c[5]:c[4])});n++}
+  else{d.exp.push({n:c[2]||'',cat:c[3]||'',plan:num(c[4]),real:num(c[5])});n++}});
+ save();render();alert(n+' linhas importadas.')}
+function pasteImp(txt){const d=M(cur);let n=0;txt.split(/\r?\n/).forEach(l=>{let c=l.split(/\t|;/).map(x=>x.trim());if(c.length<2){const m=l.match(/^(.*?)\s+(R\$\s*[\d.,]+)/);if(m)c=[m[1],m[2]]}
+ const nm=c[0];if(!nm||/^(soma|saldo|dispon|in[ií]cio|total)/i.test(nm))return;
+ const v=c.slice(1).map(x=>x.includes('%')?'':num(x)).find(x=>x!=='');if(v===undefined)return;
+ if(/^entradas?/i.test(nm))d.income.push({n:'Entradas',v});else d.exp.push({n:nm,cat:'',plan:v,real:''});n++});
+ save();$('pst').hidden=true;$('pt').value='';render();alert(n+' linhas importadas.')}
+function render(){
+ document.getElementById('mes').value=cur;const d=M(cur),s=sums(cur),pv=sums(prev(cur));
+ const hasPv=pv&&(pv.inc||pv.spent);const rate=s.inc?s.eco/s.inc:0;
+ const rows=d.exp.map((x,i)=>({x,i})).sort((a,b)=>eff(b.x)-eff(a.x));
+ const cats=[...new Set(Object.values(S.months).flatMap(m=>m.exp.map(x=>x.cat)).filter(Boolean))];
+ document.getElementById('cats').innerHTML=cats.map(c=>`<option value="${esc(c)}">`).join('');
+ const hist=Object.keys(S.months).filter(m=>sums(m).inc||sums(m).spent).sort().reverse().map(m=>{const a=sums(m),b=sums(prev(m));
+  return `<tr><td>${m.split('-').reverse().join('/')}</td><td class="n">${R(a.inc)}</td><td class="n">${R(a.spent)}</td><td class="n ${a.eco>=0?'in':'ex'}">${R(a.eco)}</td><td class="n">${P(a.inc?a.eco/a.inc:0)}</td><td class="n">${b&&(b.inc||b.spent)?delta(a.eco-b.eco):'<span class="mu">–</span>'}</td></tr>`}).join('');
+ document.getElementById('app').innerHTML=`
+ <div class="hero">
+ <div class="k"><small>Renda do mês</small><b class="in">${R(s.inc)}</b><small>${hasPv?'Mês anterior: '+R(pv.inc):'&nbsp;'}</small></div>
+ <div class="k"><small>Gasto do mês</small><b class="ex">${R(s.spent)}</b><small>Previsto: ${R(s.plan)}${hasPv?' · anterior: '+R(pv.spent):''}</small></div>
+ <div class="k"><small>Disponível após os custos previstos</small><b class="${s.inc-s.plan>=0?'in':'ex'}">${R(s.inc-s.plan)}</b><small>Falta pagar: ${R(d.exp.reduce((a,x)=>a+(has(x.real)?0:(+x.plan||0)),0))}</small></div>
+ <div class="k big"><small>Economia do mês</small><b class="${s.eco>=0?'in':'ex'}">${R(s.eco)}</b><small>${P(rate)} da renda${hasPv?' · vs mês anterior: ':''}${hasPv?delta(s.eco-pv.eco):''}</small></div></div>
+ <section><h2>Renda</h2><div class="sc"><table style="min-width:0"><tbody>${d.income.map((x,i)=>`<tr><td><input data-t="income" data-i="${i}" data-f="n" value="${esc(x.n)}" aria-label="Fonte"></td><td style="width:150px"><input type="number" step="0.01" data-t="income" data-i="${i}" data-f="v" value="${esc(x.v)}" aria-label="Valor"></td><td style="width:40px"><button class="del" data-del="income:${i}" aria-label="Remover">×</button></td></tr>`).join('')}</tbody></table></div>
+ <div class="row add" style="margin-top:10px"><input id="ni" placeholder="Fonte (ex.: salário, comissão)"><input id="vi" type="number" step="0.01" placeholder="Valor"><button class="p" id="ai">Adicionar renda</button></div></section>
+ <section><h2>Custos do mês</h2><div class="sc"><table><thead><tr><th>Custo</th><th>Categoria</th><th class="n">Previsto</th><th class="n">Gasto real</th><th style="width:150px">% da renda</th><th>Pago</th><th></th></tr></thead><tbody>
+ ${rows.map(({x,i})=>{const p=s.inc?eff(x)/s.inc:0;return `<tr><td><input data-t="exp" data-i="${i}" data-f="n" value="${esc(x.n)}" aria-label="Custo"></td><td><input list="cats" data-t="exp" data-i="${i}" data-f="cat" value="${esc(x.cat)}" aria-label="Categoria"></td><td><input type="number" step="0.01" data-t="exp" data-i="${i}" data-f="plan" value="${esc(x.plan)}" aria-label="Previsto"></td><td><input type="number" step="0.01" data-t="exp" data-i="${i}" data-f="real" value="${esc(x.real)}" aria-label="Real"></td><td><div class="bar"><i style="width:${Math.min(100,p*100)}%"></i></div>${P(p)}${has(x.real)?'':' <span class="mu">(previsto)</span>'}</td><td><input type="checkbox" data-pay="${i}" ${has(x.real)?'checked':''} aria-label="Pago" style="width:auto"></td><td><button class="del" data-del="exp:${i}" aria-label="Remover">×</button></td></tr>`}).join('')||'<tr><td colspan="7" class="mu">Nenhum custo ainda. Adicione abaixo ou copie do mês anterior.</td></tr>'}
+ </tbody></table></div>
+ <div class="row add" style="margin-top:10px"><input id="nn" placeholder="Custo (ex.: aluguel)"><input id="nc" list="cats" placeholder="Categoria"><input id="np" type="number" step="0.01" placeholder="Previsto"><input id="nr" type="number" step="0.01" placeholder="Gasto real"><button class="p" id="ae">Adicionar custo</button></div>
+ <p class="hint">Enquanto o gasto real estiver vazio, o % da renda usa o valor previsto.</p></section>
+ ${varSec()}<section><h2>Histórico mês a mês</h2><div class="sc"><table><thead><tr><th>Mês</th><th class="n">Renda</th><th class="n">Gasto</th><th class="n">Economia</th><th class="n">% poupado</th><th class="n">Economia vs mês anterior</th></tr></thead><tbody>${hist||'<tr><td colspan="6" class="mu">O histórico aparece quando você lançar renda ou gastos.</td></tr>'}</tbody></table></div></section>`}
+const $=id=>document.getElementById(id);
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.id==='mes'){if(t.value){cur=t.value;render()}return}
+ if(t.id==='sel'){sel=t.value;render();return}
+ if(t.id==='fc'){const f=t.files[0];if(f)f.text().then(imp);t.value='';return}
+ if(t.id==='fi'){const f=t.files[0];if(!f)return;f.text().then(x=>{try{const j=JSON.parse(x);if(j.months){S=j;save();render()}else alert('Arquivo inválido.')}catch(_){alert('Arquivo inválido.')}});return}
+ if(t.dataset.pay!==undefined){const x=M(cur).exp[t.dataset.pay];x.real=t.checked?(has(x.real)?x.real:(x.plan||0)):'';save();render();return}
+ if(t.dataset.t){M(cur)[t.dataset.t][t.dataset.i][t.dataset.f]=t.type==='number'?t.value:t.value;save();render()}});
+document.addEventListener('click',e=>{const t=e.target,d=M(cur);
+ if(t.dataset.del){const[k,i]=t.dataset.del.split(':');d[k].splice(+i,1);save();render()}
+ else if(t.id==='ai'){if(!$('ni').value&&!$('vi').value)return;d.income.push({n:$('ni').value,v:$('vi').value});save();render()}
+ else if(t.id==='ae'){if(!$('nn').value)return;d.exp.push({n:$('nn').value,cat:$('nc').value,plan:$('np').value,real:$('nr').value});save();render()}
+ else if(t.id==='cp'){const p=S.months[prev(cur)];if(!p){alert('Não há dados no mês anterior.');return}
+  if((d.income.length||d.exp.length)&&!confirm('Este mês já tem lançamentos. Adicionar os do mês anterior mesmo assim?'))return;
+  p.income.forEach(x=>d.income.push({...x}));p.exp.forEach(x=>d.exp.push({n:x.n,cat:x.cat,plan:has(x.plan)?x.plan:x.real,real:''}));save();render()}
+ else if(t.id==='ex'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='financeiro-backup.json';a.click()}
+ else if(t.id==='im')$('fi').click()
+ else if(t.id==='ic')$('fc').click()
+ else if(t.id==='pc')$('pst').hidden=!$('pst').hidden
+ else if(t.id==='pf')$('pst').hidden=true
+ else if(t.id==='pg')pasteImp($('pt').value)});
+render();
+const SUPABASE_URL='https://wacpywxhkpdehktxpdda.supabase.co',SUPABASE_KEY='sb_publishable_QnUaV9lOHyhQG3qwo63WsA_it-sH69T';
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const ov=document.getElementById('login');let started=false;
+function supaDB(){return{doc:p=>({set:async d=>{const{error}=await sb.from('months').upsert({month:p.split('/')[1],data:d,updated_at:new Date().toISOString()});if(error)throw error}}),
+ collection:()=>({onSnapshot:(next,err)=>{const load=async()=>{const{data,error}=await sb.from('months').select('month,data');if(error){err&&err(error);return}next({docs:data.map(r=>({id:r.month,data:()=>r.data}))})};load();sb.channel('months-sync').on('postgres_changes',{event:'*',schema:'public',table:'months'},load).subscribe();return()=>{}}})}}
+function startSync(){if(started)return;started=true;DB=supaDB();st('Conectando\u2026');const tm=setTimeout(()=>st('Sem resposta do servidor. Confira a conex\u00e3o.'),10000);
+ DB.collection('months').onSnapshot(snap=>{clearTimeout(tm);let ch=false;snap.docs.forEach(x=>{const v=x.data();if(!v)return;const c={income:v.income||[],exp:v.exp||[]},j=JSON.stringify(c);if(synced[x.id]===j)return;synced[x.id]=j;S.months[x.id]=c;ch=true});
+  st('Sincronizado');if(ch)render();if(first){first=false;save()}},e=>st('Erro ao sincronizar: '+(e.message||e.code)))}
+sb.auth.onAuthStateChange((ev,ses)=>{if(ses){ov.hidden=true;startSync()}else ov.hidden=false});
+sb.auth.getSession().then(({data})=>{if(data.session){ov.hidden=true;startSync()}});
+document.getElementById('lf').addEventListener('submit',async e=>{e.preventDefault();const m=document.getElementById('lm');m.textContent='';
+ const{error}=await sb.auth.signInWithPassword({email:document.getElementById('le').value.trim(),password:document.getElementById('lp').value});
+ if(error)m.textContent='E-mail ou senha incorretos.'});
+document.addEventListener('click',async e=>{if(e.target.id==='lo'){try{localStorage.removeItem(K)}catch(_){}await sb.auth.signOut();location.reload()}});
+</script></body></html>
