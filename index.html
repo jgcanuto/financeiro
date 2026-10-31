@@ -67,6 +67,14 @@ function sums(m){const d=S.months[m];if(!d)return null;
  const inc=d.income.reduce((a,x)=>a+(+x.v||0),0),spent=d.exp.reduce((a,x)=>a+(+x.real||0),0),plan=d.exp.reduce((a,x)=>a+(+x.plan||0),0);
  return{inc,spent,plan,eco:inc-spent}}
 function delta(v){if(!v)return '<span class="mu">sem variação</span>';return `<span class="${v>0?'in':'ex'}">${v>0?'+':'−'}${R(Math.abs(v))}</span>`}
+let cper='mes';
+function catSec(){
+ const ms=cper==='ano'?Object.keys(S.months).filter(m=>m.slice(0,4)===cur.slice(0,4)):[cur];
+ const t={};let tot=0,inc=0;const cn=x=>(x.cat||'').trim()||'Sem categoria';
+ ms.forEach(m=>{const d=S.months[m];if(!d)return;d.income.forEach(x=>inc+=(+x.v||0));d.exp.forEach(x=>{const v=eff(x);t[cn(x)]=(t[cn(x)]||0)+v;tot+=v})});
+ const pm=prev(cur),pt={};if(cper==='mes'&&S.months[pm])S.months[pm].exp.forEach(x=>{pt[cn(x)]=(pt[cn(x)]||0)+eff(x)});
+ const rows=Object.entries(t).sort((a,b)=>b[1]-a[1]),mx=rows.length?rows[0][1]||1:1,cm=cper==='mes';
+ return `<section><h2>Gastos por categoria</h2><div class="row" style="margin:0 0 10px"><label for="cp">Período</label><select id="cp" style="background:var(--bg);color:var(--ink);border:1px solid var(--ln);border-radius:6px;padding:7px 9px;font:inherit"><option value="mes"${cm?' selected':''}>Este mês (${mm(cur)})</option><option value="ano"${cm?'':' selected'}>Ano de ${cur.slice(0,4)}</option></select></div><div class="sc"><table><thead><tr><th>Categoria</th><th class="n">Total</th><th style="width:150px">% dos gastos</th><th class="n">% da renda</th>${cm?'<th class="n">vs mês anterior</th>':''}</tr></thead><tbody>${rows.map(([c,v])=>`<tr><td>${esc(c)}</td><td class="n">${R(v)}</td><td><div class="bar"><i style="width:${v/mx*100}%"></i></div>${P(tot?v/tot:0)}</td><td class="n">${P(inc?v/inc:0)}</td>${cm?`<td class="n">${S.months[pm]?dc(v-(pt[c]||0)):'–'}</td>`:''}</tr>`).join('')||'<tr><td colspan="5" class="mu">Nenhum custo lançado neste período.</td></tr>'}${rows.length?`<tr><td><b>Total</b></td><td class="n"><b>${R(tot)}</b></td><td></td><td class="n"><b>${P(inc?tot/inc:0)}</b></td>${cm?'<td></td>':''}</tr>`:''}</tbody></table></div><p class="hint">Usa o gasto real quando já foi lançado e o previsto quando ainda não foi pago.${rows.length?` Maior categoria: ${esc(rows[0][0])}, com ${P(tot?rows[0][1]/tot:0)} dos gastos.`:''}</p></section>`}
 let sel='';
 const mm=m=>m.split('-').reverse().join('/');
 const key=n=>String(n||'').trim().toLowerCase();
@@ -113,11 +121,12 @@ function render(){
  </tbody></table></div>
  <div class="row add" style="margin-top:10px"><input id="nn" placeholder="Custo (ex.: aluguel)"><input id="nc" list="cats" placeholder="Categoria"><input id="np" type="number" step="0.01" placeholder="Previsto"><input id="nr" type="number" step="0.01" placeholder="Gasto real"><button class="p" id="ae">Adicionar custo</button></div>
  <p class="hint">Enquanto o gasto real estiver vazio, o % da renda usa o valor previsto.</p></section>
- ${varSec()}<section><h2>Histórico mês a mês</h2><div class="sc"><table><thead><tr><th>Mês</th><th class="n">Renda</th><th class="n">Gasto</th><th class="n">Economia</th><th class="n">% poupado</th><th class="n">Economia vs mês anterior</th></tr></thead><tbody>${hist||'<tr><td colspan="6" class="mu">O histórico aparece quando você lançar renda ou gastos.</td></tr>'}</tbody></table></div></section>`}
+ ${catSec()}${varSec()}<section><h2>Histórico mês a mês</h2><div class="sc"><table><thead><tr><th>Mês</th><th class="n">Renda</th><th class="n">Gasto</th><th class="n">Economia</th><th class="n">% poupado</th><th class="n">Economia vs mês anterior</th></tr></thead><tbody>${hist||'<tr><td colspan="6" class="mu">O histórico aparece quando você lançar renda ou gastos.</td></tr>'}</tbody></table></div></section>`}
 const $=id=>document.getElementById(id);
 document.addEventListener('change',e=>{const t=e.target;
  if(t.id==='mes'){if(t.value){cur=t.value;render()}return}
  if(t.id==='sel'){sel=t.value;render();return}
+ if(t.id==='cp'){cper=t.value;render();return}
  if(t.id==='fc'){const f=t.files[0];if(f)f.text().then(imp);t.value='';return}
  if(t.id==='fi'){const f=t.files[0];if(!f)return;f.text().then(x=>{try{const j=JSON.parse(x);if(j.months){S=j;save();render()}else alert('Arquivo inválido.')}catch(_){alert('Arquivo inválido.')}});return}
  if(t.dataset.pay!==undefined){const x=M(cur).exp[t.dataset.pay];x.real=t.checked?(has(x.real)?x.real:(x.plan||0)):'';save();render();return}
